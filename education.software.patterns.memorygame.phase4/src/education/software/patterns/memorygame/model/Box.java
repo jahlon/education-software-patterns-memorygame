@@ -30,10 +30,6 @@ public class Box {
 	 * The content of the boxes is represented with numbers, and images are associated to those numbers.
 	 */
 	private int value;
-	/**
-	 * Stores the path of the image that is shown when the box is visible
-	 */
-	private String image;
 	
 	/**
 	 * Creates an instance of the box
@@ -41,10 +37,9 @@ public class Box {
 	 * @param value the value (contents) of the box)
 	 * @param image the image that is going to be shown when the box is visible
 	 */
-	public Box( int number, int value, String image ) {
+	public Box( int number, int value ) {
 		this.number = number;
 		this.value = value;
-		this.image = image;
 		status = HIDDEN;	
 	}
 	
@@ -82,14 +77,6 @@ public class Box {
 	 */
 	public int getStatus() {
 		return status;
-	}
-	
-	/**
-	 * Gets the path of the image shown when the box is visible.
-	 * @return
-	 */
-	public String getImage() {
-		return image;
 	}
 	
 	

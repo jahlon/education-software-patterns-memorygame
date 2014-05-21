@@ -65,7 +65,7 @@ public class MemoryGameAppShell extends Shell implements Observer {
 	public MemoryGameAppShell(Display display, final MemoryGameApp controller) {
 		super(display, SWT.SHELL_TRIM);
 		this.controller = controller;
-		initializeTheme(ThemeFactory.DEFAULT_THEME);
+		setTheme(ThemeFactory.getFactory(ThemeFactory.DEFAULT_THEME).createTheme());
 		addShellListener(new ShellAdapter() {
 			@Override
 			public void shellClosed(ShellEvent e) {
@@ -166,7 +166,7 @@ public class MemoryGameAppShell extends Shell implements Observer {
 		mntmDefault.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				initializeTheme(ThemeFactory.DEFAULT_THEME);
+				setTheme(ThemeFactory.getFactory(ThemeFactory.DEFAULT_THEME).createTheme());
 			}
 		});
 		mntmDefault.setSelection(true);
@@ -176,7 +176,7 @@ public class MemoryGameAppShell extends Shell implements Observer {
 		mntmFlowers.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				initializeTheme(ThemeFactory.FLOWERS_THEME);
+				setTheme(ThemeFactory.getFactory(ThemeFactory.FLOWERS_THEME).createTheme());
 			}
 		});
 		mntmFlowers.setText("Flowers");
@@ -185,7 +185,7 @@ public class MemoryGameAppShell extends Shell implements Observer {
 		mntmDogs.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				initializeTheme(ThemeFactory.DOGS_THEME);
+				setTheme(ThemeFactory.getFactory(ThemeFactory.DOGS_THEME).createTheme());
 			}
 		});
 		mntmDogs.setText("Dogs");
@@ -200,9 +200,13 @@ public class MemoryGameAppShell extends Shell implements Observer {
 
 	}
 	
-	protected void initializeTheme(int selectedTheme) {
+	/**
+	 * Sets the theme for the game board images
+	 * @param newTheme the theme that will be used
+	 */
+	public void setTheme(Theme newTheme) {
 		if(!controller.hasGameStarted()) {
-			theme = ThemeFactory.getFactory(selectedTheme).createTheme();
+			theme = newTheme;
 		}
 	}
 	

@@ -42,7 +42,7 @@ public class MemoryGame {
 	public MemoryGame(GameDifficulty difficulty) {
 		List<Integer> tNumbers = new ArrayList<Integer>();
 		
-		int numberOfBoxes = getNumberofBoxes(difficulty);
+		int numberOfBoxes = getNumberOfBoxes(difficulty);
 		
 		for(int i = 1; i <= numberOfBoxes; i++) {
 			int number = ( i % (numberOfBoxes/2) ) + 1;
@@ -67,7 +67,7 @@ public class MemoryGame {
 	 * @param difficulty the difficulty of the game being created
 	 * @return an integer indicating the number of boxes
 	 */
-	private int getNumberofBoxes(GameDifficulty difficulty) {
+	private int getNumberOfBoxes(GameDifficulty difficulty) {
 		switch(difficulty) {
 			case HARD:
 				return 30;

@@ -10,11 +10,6 @@ import java.util.List;
 public class Board {
 	
 	/**
-	 * The path where the images of the game are stored
-	 */
-	private final String IMAGES_PATH = "./themes/default/";
-	
-	/**
 	 * The set of boxes that make up the panel.
 	 */
 	private List<Box> boxes;
@@ -119,9 +114,7 @@ public class Board {
 		int numBox = 1;
 		
 		for (int i=0; i < numbers.length; i++) {
-			StringBuffer sb = new StringBuffer(IMAGES_PATH);
-			sb.append(numbers[i]).append(".png");
-			Box box = new Box(numBox++, numbers[i], sb.toString());
+			Box box = new Box(numBox++, numbers[i]);
 			boxes.add(box);
 		}
 	}
