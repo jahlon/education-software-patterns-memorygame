@@ -13,8 +13,8 @@ public class SpecialBoxDecorator extends BoxImageDecorator {
 	}
 
 	@Override
-	public void repaint(GC gc) {
-		baseImage.repaint(gc);
+	public void paint(GC gc) {
+		baseImage.paint(gc);
 		
 		// Determine how big the drawing area is
         Rectangle rect = gc.getClipping();

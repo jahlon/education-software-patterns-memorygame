@@ -9,6 +9,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
+import education.software.patterns.memorygame.model.Box;
+import education.software.patterns.memorygame.themes.Theme;
+
 /**
  * This class represent a graphical box in the game board
  * @author jehincapie
@@ -37,9 +40,10 @@ public class GraphicalBox extends Canvas {
 	 * @param image
 	 * @param number
 	 */
-	public GraphicalBox(Composite parent, int style, Image image, int number, boolean special) {
+	public GraphicalBox(Composite parent, int style, int number, Box box, Theme theme) {
 		super(parent, style);
-		this.boxImage = special ? new SpecialBoxDecorator(new BoxImage(image)) : new BoxImage(image);
+		Image image = box.getStatus() == Box.HIDDEN ? theme.getHiddenImage() : theme.getImage(box.getValue());
+		this.boxImage = box.isSpecial() ? new SpecialBoxDecorator(new BoxImage(image)) : new BoxImage(image);
 		this.number = number;
 		
 		addListener(SWT.Paint, new Listener() {
@@ -68,7 +72,7 @@ public class GraphicalBox extends Canvas {
 			gc.fillRectangle(getClientArea());
 		}
 		
-		boxImage.repaint(gc);
+		boxImage.paint(gc);
 		
 	}
 	

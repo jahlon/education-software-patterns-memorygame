@@ -5,7 +5,7 @@ import org.eclipse.swt.graphics.Image;
 
 public interface DrawableComponent {
 	
-	void repaint(GC gc);
+	void paint(GC gc);
 	void setImage(Image image);
 
 }

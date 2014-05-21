@@ -78,10 +78,10 @@ public class GameBoardComposite extends Composite {
 		List<Box> boxes = board.getBoxes();
 		for (Box box : boxes) {
 			GraphicalBox gb = new GraphicalBox(this, 
-												SWT.BORDER | SWT.CENTER, 
-												box.getStatus() == Box.HIDDEN? theme.getHiddenImage() : theme.getImage(box.getValue()), 
+												SWT.BORDER | SWT.CENTER,  
 												gBoxes.size()+1,
-												box.isSpecial());
+												box,
+												theme);
 			GridData gData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 			gData.verticalIndent = 5;
 			gData.horizontalIndent = 5;

@@ -18,7 +18,7 @@ public class BoxImage implements DrawableComponent {
 	}
 	
 	@Override
-	public void repaint(GC gc) {
+	public void paint(GC gc) {
 		// Determine how big the drawing area is
         Rectangle rect = gc.getClipping();
 
