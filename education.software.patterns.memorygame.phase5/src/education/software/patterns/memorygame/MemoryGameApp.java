@@ -119,7 +119,7 @@ public class MemoryGameApp {
 	 */
 	public void makeFirstMove(int boxNumber) {
 		game.makeFirstMove(boxNumber);
-		Box box = game.getBoard().getFirsBoxSelected();
+		Box box = game.getBoard().getFirstBoxSelected();
 		shell.refreshBox(box);
 	}
 	
@@ -134,8 +134,8 @@ public class MemoryGameApp {
 		shell.refreshBox(box);
 		
 		if(pairMade) {
-			shell.lockBox(game.getBoard().getFirsBoxSelected());
-			shell.lockBox(box);
+			shell.refreshBox(game.getBoard().getFirstBoxSelected());
+			//shell.lockBox(box);
 			shell.updateScore(game.getScore());
 			
 			if(game.isBoardComplete()) {
@@ -156,8 +156,9 @@ public class MemoryGameApp {
 				
 				@Override
 				public void run() {
-					shell.unlockBox(game.getBoard().getFirsBoxSelected());
-					shell.refreshBox(game.getBoard().getFirsBoxSelected());
+					shell.unlockBox(game.getBoard().getFirstBoxSelected());
+					shell.refreshBox(game.getBoard().getFirstBoxSelected());
+					shell.unlockBox(box);
 					shell.refreshBox(box);
 					shell.unlockBoard();
 				}

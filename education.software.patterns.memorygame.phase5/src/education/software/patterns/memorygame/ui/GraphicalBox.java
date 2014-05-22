@@ -1,7 +1,6 @@
 package education.software.patterns.memorygame.ui;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Canvas;
@@ -19,32 +18,34 @@ import education.software.patterns.memorygame.themes.Theme;
 public class GraphicalBox extends Canvas {
 	
 	/**
-	 * Represents the image that is being painted in the canvas
-	 */
-	private DrawableComponent boxImage;
-	
-	/**
 	 * The number of the box in the board
 	 */
 	private int number;
 	
 	/**
-	 * The background color of the box
+	 * The state of the box
 	 */
-	private int bgColor;
+	private BoxState state;
+	
+	private BoxState hiddenState;
+	private BoxState uncoveredState;
+	private BoxState discoveredState;
 	
 	/**
 	 * Creates the canvas and call the repaint method in order to refresh the image
 	 * @param parent
 	 * @param style
-	 * @param image
+	 * @param boxImage
 	 * @param number
 	 */
 	public GraphicalBox(Composite parent, int style, int number, Box box, Theme theme) {
 		super(parent, style);
-		Image image = box.getStatus() == Box.HIDDEN ? theme.getHiddenImage() : theme.getImage(box.getValue());
-		this.boxImage = box.isSpecial() ? new SpecialBoxDecorator(new BoxImage(image)) : new BoxImage(image);
 		this.number = number;
+		Image image = theme.getHiddenImage();
+		hiddenState = new HiddenState(new BoxImage(image));
+		uncoveredState = new UncoveredState(box.isSpecial() ? new SpecialBoxDecorator(new BoxImage(image)) : new BoxImage(image));
+		discoveredState = new DiscoveredState(box.isSpecial() ? new SpecialBoxDecorator(new BoxImage(image)) : new BoxImage(image));
+		state = hiddenState;
 		
 		addListener(SWT.Paint, new Listener() {
 
@@ -61,27 +62,14 @@ public class GraphicalBox extends Canvas {
 	 * @param gc the graphical object
 	 */
 	public void repaint(GC gc) {
-		if(!getEnabled()) {
-			Color c = null;
-			if(bgColor == GameBoardComposite.BG_GREEN) {
-				c = getDisplay().getSystemColor(SWT.COLOR_GREEN);
-			} else {
-				c = gc.getBackground();
-			}
-			gc.setBackground(c);
-			gc.fillRectangle(getClientArea());
-		}
-		
-		boxImage.paint(gc);
-		
+		state.repaint(gc);
 	}
 	
 	/**
-	 * Locks the box so it can receive events
-	 * @param bgColor a color that is going to be set as background when the box is locked
+	 * Locks the box so it can't receive events
 	 */
-	public void lock(int bgColor) {
-		this.bgColor = bgColor;
+	public void lock() {
+		state = uncoveredState;
 		setEnabled(false);
 	}
 	
@@ -89,7 +77,16 @@ public class GraphicalBox extends Canvas {
 	 * Unlocks the box so it can receive events
 	 */
 	public void unlock() {
+		state = hiddenState; 
 		setEnabled(true);
+	}
+	
+	/**
+	 * 
+	 */
+	public void discover() {
+		state = discoveredState;
+		setEnabled(false);
 	}
 	
 	/**
@@ -97,7 +94,7 @@ public class GraphicalBox extends Canvas {
 	 * @param image the new image
 	 */
 	public void setImage(Image image) {
-		boxImage.setImage(image);
+		state.setImage(image);
 	}
 	
 	/**

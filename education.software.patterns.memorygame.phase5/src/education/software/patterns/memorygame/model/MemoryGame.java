@@ -115,8 +115,13 @@ public abstract class MemoryGame {
 	 */
 	public boolean makeSecondMove(int boxNumber) {
 		boolean pairMade = board.selectSecondBox(boxNumber);
-		if(pairMade)
-			score++;
+		if(pairMade) {
+			if(board.getFirstBoxSelected().isSpecial())
+				score+=2;
+			else
+				score++;
+		}
+			
 		return pairMade;
 	}
 	

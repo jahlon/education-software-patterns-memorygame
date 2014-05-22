@@ -21,17 +21,7 @@ import education.software.patterns.memorygame.themes.Theme;
  * @author chucho
  */
 public class GameBoardComposite extends Composite {
-	
-	/**
-	 * Represents the code for non background
-	 */
-	public static final int BG_NONE = 0;
-	
-	/**
-	 * Represents the code for green background of the board boxes
-	 */
-	public static final int BG_GREEN = 1;
-	
+		
 	/**
 	 * The list of boxes that make up the game board.
 	 */
@@ -136,13 +126,24 @@ public class GameBoardComposite extends Composite {
 	 */
 	public void refreshBox(Box box, Theme theme) {
 		GraphicalBox gBox = findBox(box);
+					
+		if(box.getStatus() == Box.VISIBLE) {
+			gBox.lock();
+		} else if (box.getStatus() == Box.DISCOVERED) {
+			gBox.discover();
+		}
+		
 		gBox.setImage(box.getStatus() == Box.HIDDEN ? theme.getHiddenImage() : theme.getImage(box.getValue()));
-		gBox.redraw();	
-		if(box.getStatus() == Box.VISIBLE || box.getStatus() == Box.DISCOVERED) {
+		
+		gBox.redraw();
+		
+		
+			
+		/*if(box.getStatus() == Box.VISIBLE || box.getStatus() == Box.DISCOVERED) {
 			gBox.setEnabled(false);
 		} else {
 			gBox.setEnabled(true);
-		}
+		}*/
 	}
 	
 	/**
@@ -151,7 +152,7 @@ public class GameBoardComposite extends Composite {
 	 */
 	public void lockBox(Box box) {
 		GraphicalBox gBox = findBox(box);
-		gBox.lock(BG_GREEN);
+		gBox.lock();
 		gBox.redraw();
 	}
 

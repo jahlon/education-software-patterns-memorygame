@@ -174,7 +174,7 @@ public class Board {
 	 * Gets the box that was selected with the first move
 	 * @return a Box object
 	 */
-	public Box getFirsBoxSelected() {
+	public Box getFirstBoxSelected() {
 		return firstBoxSelected;
 	}
 	
